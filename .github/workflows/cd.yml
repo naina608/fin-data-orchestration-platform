@@ -35,9 +35,24 @@ jobs:
       # ------------------------
       # DBT validation (offline FIXED)
       # ------------------------
-      - name: dbt validation
+      - name: dbt validation (offline)
         run: |
           mkdir -p ~/.dbt
+
+          cat > ~/.dbt/profiles.yml <<EOL
+          banking_dbt:
+            target: dev
+            outputs:
+              dev:
+                type: postgres
+                host: localhost
+                user: dummy
+                password: dummy
+                port: 5432
+                dbname: dummy
+                schema: public
+          EOL
+
           cd banking_dbt
           dbt deps
           dbt parse --profiles-dir ~/.dbt
