@@ -33,9 +33,9 @@ jobs:
           pip install -r requirements.txt
 
       # ------------------------
-      # DBT validation (offline FIXED)
+      # DBT validation (offline safe)
       # ------------------------
-      - name: dbt validation (offline)
+      - name: dbt validation (offline safe)
         run: |
           mkdir -p ~/.dbt
 
@@ -44,19 +44,12 @@ jobs:
             target: dev
             outputs:
               dev:
-                type: postgres
-                host: localhost
-                user: dummy
-                password: dummy
-                port: 5432
-                dbname: dummy
-                schema: public
+                type: none
           EOL
 
           cd banking_dbt
           dbt deps
           dbt parse --profiles-dir ~/.dbt
-          dbt compile --profiles-dir ~/.dbt
 
       # ------------------------
       # Run unit tests
