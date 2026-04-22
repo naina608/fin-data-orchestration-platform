@@ -67,8 +67,8 @@ jobs:
                 schema: ANALYTICS
           EOL
 
-      - name: dbt compile (validation)
+      - name: dbt parse (no DB required)
         run: |
           cd banking_dbt
           dbt deps
-          dbt compile
+          dbt parse
