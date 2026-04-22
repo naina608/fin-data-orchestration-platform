@@ -33,14 +33,15 @@ jobs:
           pip install -r requirements.txt
 
       # ------------------------
-      # DBT validation (offline)
+      # DBT validation (offline FIXED)
       # ------------------------
       - name: dbt validation
         run: |
+          mkdir -p ~/.dbt
           cd banking_dbt
           dbt deps
-          dbt parse
-          dbt compile
+          dbt parse --profiles-dir ~/.dbt
+          dbt compile --profiles-dir ~/.dbt
 
       # ------------------------
       # Run unit tests
@@ -52,7 +53,6 @@ jobs:
 
       # ------------------------
       # Placeholder deployment step
-      # (replace later with Docker / Airflow / FastAPI deploy)
       # ------------------------
       - name: Deploy application (placeholder)
         run: |
